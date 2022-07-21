@@ -21,65 +21,16 @@
               <h4 class="card-title">Número de hojas potenciales - Estación {{estacionName}}</h4>
               <p class="card-category"></p>
             </div>
-            <div class="card-body">
-              <!-- <form action="/tomadato14" method="POST">
-                <div class="form-group">
-                  <input type="text" name="dato1" placeholder="Dato1" id="" class="form-control">
-                </div>
-                <div class="form-group">
-                  <input type="text" name="dato2" placeholder="Dato2" id="" class="form-control">
-                </div>
-                <div class="form-group">
-                  <input type="text" name="dato3" placeholder="Dato3" id="" class="form-control">
-                </div>
-                <div class="form-group">
-
-                  <div class="form-outline datetimepicker">
-                    <input type="text" name="fecha" class="form-control" value="2021-09-15" id="datetimepickerExample"/>
-                    <label for="datetimepickerExample" class="form-label">Escriba Fecha</label>
-                  </div>
-
-
-
-
-                </div>
-
-                <div class="form-group">
-                  <button type="submit" class="btn btn-primary w-100">Enviar</button>
-                </div>
-
-
-
-              </form> -->
-
-            </div>
           </div>
         </div>
 
         
-        <div class="col-md-6">
+        <div class="col-md-6 flex-column" >
 
 
-          <div class="alert alert-success alert-dismissible fade show" role="alert">
-            <!-- <strong>En función de las condiciones climáticas predisponentes tomando como referencia la fecha de consulta,  se espera que  se hayan emitido {{valor1}} hojas verdaderas en los últimos 14 días o {{valor2}} hojas en los últimos 28 días</strong> -->
-
-            <strong>En función de las condiciones climáticas predisponentes  durante el periodo terminando el {{last_fecha}}. Se espera que  se hayan emitido {{NHojas14}} hojas verdaderas en las últimas 2 semanas o {{NHojas28}} hojas en las últimas 4 semanas.</strong>
-
-            <!-- <strong>En función de las condiciones climáticas predisponentes tomando como referencia la fecha de consulta,  se espera que  se hayan emitido {{valor1}} hojas verdaderas en las últimas 2 semanas o {{valor2}} hojas en las últimas 4 semanas</strong> -->
-            <!-- <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> -->
-          </div>
-
-          <!-- <div class="alert alert-success alert-dismissible fade show" role="alert">
-            <strong>En los últimos 14 días han crecido: {{valor1}} hojas potenciales</strong>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> 
-          </div>
-
-          <div class="alert alert-success alert-dismissible fade show" role="alert">
-            <strong>En los últimos 28 días han crecido: {{valor2}} hojas potenciales</strong>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> 
-          </div> -->
-
-        
+          <div class="alert alert-success alert-dismissible fade show p-2" role="alert">
+            <strong >En función de las condiciones climáticas predisponentes  durante el periodo terminando el {{last_fecha}}. Se espera que  se hayan emitido {{NHojas14}} hojas verdaderas en las últimas 2 semanas o {{NHojas28}} hojas en las últimas 4 semanas.</strong>
+          </div>   
 
         </div>
 
@@ -88,7 +39,7 @@
             <div class="card text-center">
               <div class="card-body">
                 <h5 class="card-title">Temperatura</h5>
-                <canvas id="chartTemperaturaNroHojas" width="400" Height="250"></canvas>
+                <canvas id="chartTemperaturaNroHojas" style="width:100% ;height: 30vh"></canvas>
                 <script type="module">
                   function totalCasesChart(ctx) {
                     //const { temp1, temp2 } = data;
@@ -201,7 +152,7 @@
             <div class="card text-center">
               <div class="card-body">
                 <h5 class="card-title">Grados día</h5>
-                <canvas id="chartGradosDiaNroHojas" width="400" Height="250"></canvas>
+                <canvas id="chartGradosDiaNroHojas" style="width:100% ;height: 30vh"></canvas>
         
                 <script type="module">
         
@@ -375,7 +326,7 @@
         </div>
         <div class="modal-body">
 
-          <canvas id="chart1gNroHojas" width="800" Height="350"></canvas>
+          <canvas id="chart1gNroHojas" style="width:100% ;height: 50vh"></canvas>
 
           <script type="module">
             function totalCasesChart(ctx) {
@@ -539,7 +490,7 @@
         </div>
         <div class="modal-body">
 
-          <canvas id="chart3gNroHojas" width="800" Height="350"></canvas>
+          <canvas id="chart3gNroHojas" style="width:100% ;height: 50vh"></canvas>
 
           <script type="module">
             function totalCasesChart(ctx) {
@@ -649,65 +600,6 @@
   </div>
 </div>
 
-
-<!-- <div class="row mt-5">
-
-  <div class="col-md-6">
-          <table class ="table table-bordered table-hover">
-                  <thead>
-                      <tr>
-                         
-                          <th>Fecha</th>
-                          <th>Nro Hojas ingresado</th>
-                          <th>Opciones</th>
-                      </tr>
-                  </thead>
-                  <tbody>
-                    {% for dato in datos %}
-                    <tr>
-                        <td>{{dato.1}}</td>
-                        <td>{{dato.2}}</td>
-                        <td>
-                            <a href="/deleteNroHojasView14/{{dato.0}}" class="btn btn-danger btn-delete"> Eliminar </a>
-                        </td>
-    
-                    </tr>
-    
-                    {% endfor %}
-
-                    
-                  </tbody>
-          </table>
-
-  </div>
-
-  <div class="col-md-6">
-    {% with messages = get_flashed_messages() %}
-
-    {% if messages %}
-    {% for mensaje in messages %}
-
-
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-        <strong>{{mensaje}}</strong>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-
-    {% endfor %}
-    {% endif %}
-    {% endwith %}
-      <form action="/addNroHojasView14" method="POST">
-
-          <div class="form-group">
-              <input type="text" name="nroHojas" placeholder="Número de hojas reales" class="form-control">
-
-          </div>
-          
-          <button type="submit" class="btn btn-primary"> Guardar</button>
-      </form>
-
-  </div>
-</div> -->
 
 {% endblock content %}
 
