@@ -12,8 +12,8 @@
     {% include 'includes/topbarHide.html' %}
 
     <div class="card">
-        <div class="card-header">
-            <h3 class="card-title">Turno o intervalo máximo entre riegos - Estación: {{estacionName}} </h3>
+        <div class="card-header text-center">
+            <h3 class="card-title">Turno o intervalo máximo entre riegos - Estación {{estacionName}} </h3>
         </div>
         <div class="card-body">
             <!-- <h6 class="card-title">Calculo en función de la evapotranspiración potencial diario en mm o m<sup>3</sup> -->
@@ -26,30 +26,22 @@
                             <h5 class="card-title">¿Cuánto es el turno máximo de riego en este momento del ciclo?</h5>
                             <p class="card-category"></p>
                         </div>
-                        <div class="card-body">
-                            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                <!-- <h5>Desde la fecha de cosecha {{fechaCosecha}} han crecido: {{valorNroHojas}} hojas potenciales.</h5> -->
-                                <h5>Para el periodo de {{dias}} días finalizando el {{fechaFinal}} con un sistema de
-                                    riego por {{riego}}
-                                    y suelo de textura {{suelo}}, el turno máximo entre riegos totales para tener el
-                                    cultivo sin limitaciones
-                                    hídricas es de {{intervalo_30}} días (30mm), {{intervalo_50}} días (50mm),
-                                    {{intervalo_70}} días (70mm).</h5>
-                                <!-- <h5> Una hectárea de banano requiere {{valor2}}mm o {{valor1}} metros cúbicos de agua para suplir las necesidades de los últimos {{dias}} días. -->
-                                </h5>
-                            </div>
-
-                        </div>
-
-
                     </div>
-
-
-
                 </div>
-                <!-- <div class="col-md-6">
+            </div>
+            <div class="col-md-12 flex-column">
+                <div class="alert alert-success alert-dismissible fade show p-2" role="alert">
+                    <!-- <h5>Desde la fecha de cosecha {{fechaCosecha}} han crecido: {{valorNroHojas}} hojas potenciales.</h5> -->
+                    <h5>Para el periodo de {{dias}} días finalizando el {{fechaFinal}} con un sistema de
+                        riego por {{riego}}
+                        y suelo de textura {{suelo}}, el turno máximo entre riegos totales para tener el
+                        cultivo sin limitaciones
+                        hídricas es de {{intervalo_30}} días (30mm), {{intervalo_50}} días (50mm),
+                        {{intervalo_70}} días (70mm).</h5>
+                    <!-- <h5> Una hectárea de banano requiere {{valor2}}mm o {{valor1}} metros cúbicos de agua para suplir las necesidades de los últimos {{dias}} días. -->
+                    </h5>
+                </div>
 
-        </div> -->
             </div>
 
         </div>
