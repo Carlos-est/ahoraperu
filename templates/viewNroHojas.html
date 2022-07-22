@@ -23,250 +23,244 @@
             </div>
           </div>
         </div>
-
-        
         <div class="col-md-6 flex-column" >
-
-
           <div class="alert alert-success alert-dismissible fade show p-2" role="alert">
             <strong >En función de las condiciones climáticas predisponentes  durante el periodo terminando el {{last_fecha}}. Se espera que  se hayan emitido {{NHojas14}} hojas verdaderas en las últimas 2 semanas o {{NHojas28}} hojas en las últimas 4 semanas.</strong>
           </div>   
 
         </div>
-
-        <div class="row justify-content-center">
-          <div class="col-md-4">
-            <div class="card text-center">
-              <div class="card-body">
-                <h5 class="card-title">Temperatura</h5>
-                <canvas id="chartTemperaturaNroHojas" style="width:100% ;height: 20vh"></canvas>
-                <script type="module">
-                  function totalCasesChart(ctx) {
-                    //const { temp1, temp2 } = data;
-        
-                    const chart = new Chart(ctx, {
-        
-                      type: 'line',
-                      data: {
-        
-                        labels: {{ fechas| safe}},
-                  datasets: [
-        
-                    {
-        
-                      label: "Temperatura promedio",
-                      data: {{ tempPromedio| safe}},
-                    fill: false,
-                    borderColor: 'blue',
-                    lineTension: 0.1
-                          },
-        
-                  ]
-                      },
-        
-                  options: {
-                    scales: {
-        
-                      xAxes: [{
-        
-                        gridLines: {
-                          display: false,
-                        }
-                      }]
-                    },
-                    responsive: true
-        
-        
-                  },
-                  legend: {
-                    position: 'bottom',
-                      labels: {
-                      padding: 20,
-                        boxWidth: 15,
-                          fontFamily: 'system-ui',
-                            fontColor: 'black',
-                        }
-                  },
-                  layout: {
-                    padding: {
-                      right: 50,
-            
-                        }
-        
-                  },
-                  tooltips: {
-                    backgroundColor: '#0584f6',
-                      titleFontSize: 20,
-                        xPaddding: 20,
-                          yPadding: 20,
-                            bodyFontSize: 15,
-                              bodySpacing: 10,
-                                mode: 'x'
-                  },
-                  elements: {
-        
-                    line: {
-                      borderWidth: 8,
-                        fill: false
-        
-                    },
-                    point: {
-        
-                      radius: 6,
-                        borderWidth: 4,
-                          backgroundColor: 'white',
-                            hoverRadius: 8,
-                              hoverBorderWidth: 4
-                    }
-                  }
-            
-            
-                    });
-            
-                  }
-        
-                  function renderCharts() {
-        
-                    const ctx = document.querySelector('#chartTemperaturaNroHojas').getContext('2d');
-                    totalCasesChart(ctx);
-        
-                  }
-        
-                  renderCharts();
-        
-                </script>
-        
-                <!-- <a href="#" class="btn btn-info btn-sm" data-toggle="modal" data-target="myModalTemperatura">Ver detalle</a> -->
-                <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModalTemperaturaNroHojas">Ver
-                  detalle</button>
-                <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
-                  data-target="#myModalGraficoTemperaturaNroHojas">Ampliar gráfico</button>
-        
-              </div>
-            </div>
-          </div>
-        
-
-        
-          <div class="col-md-4">
-            <div class="card text-center">
-              <div class="card-body">
-                <h5 class="card-title">Grados día</h5>
-                <canvas id="chartGradosDiaNroHojas" style="width:100% ;height: 25vh"></canvas>
-        
-                <script type="module">
-        
-              
-                  function totalCasesChart(ctx) {
-        
-                    const chart = new Chart(ctx, {
-        
-                      type: 'line',
-                      data: {
-        
-                        labels: {{ fechas| safe}},
-                  datasets: [
-        
-                    {
-                      label: "Grados día Acumulado",
-                      data: {{ gradosDia| safe}},
-                    fill: false,
-                    borderColor: 'green',
-                    lineTension: 0.1
-                  // borderDash:[1,10]
-                          },
-        
-        
-                  ]
-                      },
-        
-                  options: {
-                    scales: {
-        
-                      xAxes: [{
-        
-                        gridLines: {
-                          display: false,
-                        }
-                      }]
-                    },
-                    responsive: true
-        
-        
-                  },
-                  legend: {
-                    position: 'bottom',
-                      labels: {
-        
-                      padding: 20,
-                        boxWidth: 15,
-                          fontFamily: 'system-ui',
-                            fontColor: 'black'
-                    }
-                  },
-                  layout: {
-                    padding: {
-                      right: 50,
-        
-                        }
-        
-                  },
-                  tooltips: {
-                    backgroundColor: '#0584f6',
-                      titleFontSize: 20,
-                        xPaddding: 20,
-                          yPadding: 20,
-                            bodyFontSize: 15,
-                              bodySpacing: 10,
-                                mode: 'x'
-                  },
-                  elements: {
-        
-                    line: {
-                      borderWidth: 8,
-                        fill: false
-        
-                    },
-                    point: {
-        
-                      radius: 6,
-                        borderWidth: 4,
-                          backgroundColor: 'white',
-                            hoverRadius: 8,
-                              hoverBorderWidth: 4
-                    }
-                  }
-        
-        
-                    });
-        
-                  }
-        
-                  function renderCharts() {
-        
-                    const ctx = document.querySelector('#chartGradosDiaNroHojas').getContext('2d');
-                    totalCasesChart(ctx);
-        
-                  }
-        
-                  renderCharts();
-        
-                </script>
-        
-                <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModalGradosdiaNroHojas">Ver
-                  detalle</button>
-                <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
-                  data-target="#myModalGraficoGradosdiaNroHojas">Ampliar gráfico</button>
-        
-              </div>
-            </div>
-        
-          </div>
-        
-        </div>
-
       </div>
     </div>
+  </div>
+  <div class="row justify-content-center">
+    <div class="col-md-4">
+      <div class="card text-center">
+        <div class="card-body">
+          <h5 class="card-title">Temperatura</h5>
+          <canvas id="chartTemperaturaNroHojas" style="width:100% ;height: 30vh"> </canvas>
+          <script type="module">
+            function totalCasesChart(ctx) {
+              //const { temp1, temp2 } = data;
+  
+              const chart = new Chart(ctx, {
+  
+                type: 'line',
+                data: {
+  
+                  labels: {{ fechas| safe}},
+            datasets: [
+  
+              {
+  
+                label: "Temperatura promedio",
+                data: {{ tempPromedio| safe}},
+              fill: false,
+              borderColor: 'blue',
+              lineTension: 0.1
+                    },
+  
+            ]
+                },
+  
+            options: {
+              scales: {
+  
+                xAxes: [{
+  
+                  gridLines: {
+                    display: false,
+                  }
+                }]
+              },
+              responsive: true
+  
+  
+            },
+            legend: {
+              position: 'bottom',
+                labels: {
+                padding: 20,
+                  boxWidth: 15,
+                    fontFamily: 'system-ui',
+                      fontColor: 'black',
+                  }
+            },
+            layout: {
+              padding: {
+                right: 50,
+      
+                  }
+  
+            },
+            tooltips: {
+              backgroundColor: '#0584f6',
+                titleFontSize: 20,
+                  xPaddding: 20,
+                    yPadding: 20,
+                      bodyFontSize: 15,
+                        bodySpacing: 10,
+                          mode: 'x'
+            },
+            elements: {
+  
+              line: {
+                borderWidth: 8,
+                  fill: false
+  
+              },
+              point: {
+  
+                radius: 6,
+                  borderWidth: 4,
+                    backgroundColor: 'white',
+                      hoverRadius: 8,
+                        hoverBorderWidth: 4
+              }
+            }
+      
+      
+              });
+      
+            }
+  
+            function renderCharts() {
+  
+              const ctx = document.querySelector('#chartTemperaturaNroHojas').getContext('2d');
+              totalCasesChart(ctx);
+  
+            }
+  
+            renderCharts();
+  
+          </script>
+  
+          <!-- <a href="#" class="btn btn-info btn-sm" data-toggle="modal" data-target="myModalTemperatura">Ver detalle</a> -->
+          <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModalTemperaturaNroHojas">Ver
+            detalle</button>
+          <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
+            data-target="#myModalGraficoTemperaturaNroHojas">Ampliar gráfico</button>
+  
+        </div>
+      </div>
+    </div>
+  
+
+  
+    <div class="col-md-4">
+      <div class="card text-center">
+        <div class="card-body">
+          <h5 class="card-title">Grados día</h5>
+          <canvas id="chartGradosDiaNroHojas" style="width:100% ;height: 30vh"></canvas>
+  
+          <script type="module">
+  
+        
+            function totalCasesChart(ctx) {
+  
+              const chart = new Chart(ctx, {
+  
+                type: 'line',
+                data: {
+  
+                  labels: {{ fechas| safe}},
+            datasets: [
+  
+              {
+                label: "Grados día Acumulado",
+                data: {{ gradosDia| safe}},
+              fill: false,
+              borderColor: 'green',
+              lineTension: 0.1
+            // borderDash:[1,10]
+                    },
+  
+  
+            ]
+                },
+  
+            options: {
+              scales: {
+  
+                xAxes: [{
+  
+                  gridLines: {
+                    display: false,
+                  }
+                }]
+              },
+              responsive: true
+  
+  
+            },
+            legend: {
+              position: 'bottom',
+                labels: {
+  
+                padding: 20,
+                  boxWidth: 15,
+                    fontFamily: 'system-ui',
+                      fontColor: 'black'
+              }
+            },
+            layout: {
+              padding: {
+                right: 50,
+  
+                  }
+  
+            },
+            tooltips: {
+              backgroundColor: '#0584f6',
+                titleFontSize: 20,
+                  xPaddding: 20,
+                    yPadding: 20,
+                      bodyFontSize: 15,
+                        bodySpacing: 10,
+                          mode: 'x'
+            },
+            elements: {
+  
+              line: {
+                borderWidth: 8,
+                  fill: false
+  
+              },
+              point: {
+  
+                radius: 6,
+                  borderWidth: 4,
+                    backgroundColor: 'white',
+                      hoverRadius: 8,
+                        hoverBorderWidth: 4
+              }
+            }
+  
+  
+              });
+  
+            }
+  
+            function renderCharts() {
+  
+              const ctx = document.querySelector('#chartGradosDiaNroHojas').getContext('2d');
+              totalCasesChart(ctx);
+  
+            }
+  
+            renderCharts();
+  
+          </script>
+  
+          <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModalGradosdiaNroHojas">Ver
+            detalle</button>
+          <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
+            data-target="#myModalGraficoGradosdiaNroHojas">Ampliar gráfico</button>
+  
+        </div>
+      </div>
+  
+    </div>
+  
   </div>
 
 
