@@ -12,26 +12,30 @@
   {% include 'includes/topbarHide.html' %}
 
   <div class="card">
+    <div class="card-header text-center">
+      <h3>Número de hojas potenciales - Estación {{estacionName}}</h3>
+    </div>
     <div class="card-body">
       <div class="row">
-        <div class="col-md-6">
-          <div class="card">
+        <div class="col-md-12">
+          <div class="card text-center">
             <div class="card-header card-header-primary">
-              <p class="card-category"></p>
-              <h4 class="card-title">Número de hojas potenciales - Estación {{estacionName}}</h4>
-              <p class="card-category"></p>
+              <h4 class="card-title">Información</h4>
             </div>
           </div>
         </div>
-        <div class="col-md-6 flex-column" >
-          <div class="alert alert-success alert-dismissible fade show p-2" role="alert">
-            <strong >En función de las condiciones climáticas predisponentes  durante el periodo terminando el {{last_fecha}}. Se espera que  se hayan emitido {{NHojas14}} hojas verdaderas en las últimas 2 semanas o {{NHojas28}} hojas en las últimas 4 semanas.</strong>
-          </div>   
+      </div>
 
-        </div>
+      <div class="col-md-12 flex-column" >
+        <div class="alert alert-success alert-dismissible fade show p-2" role="alert">
+          <h5>
+            En función de las condiciones climáticas predisponentes  durante el periodo terminando el {{last_fecha}}. Se espera que  se hayan emitido {{NHojas14}} hojas verdaderas en las últimas 2 semanas o {{NHojas28}} hojas en las últimas 4 semanas.
+          </h5>
+        </div>   
       </div>
     </div>
   </div>
+
   <div class="row justify-content-center">
     <div class="col-md-4">
       <div class="card text-center">
@@ -133,8 +137,6 @@
             renderCharts();
   
           </script>
-  
-          <!-- <a href="#" class="btn btn-info btn-sm" data-toggle="modal" data-target="myModalTemperatura">Ver detalle</a> -->
           <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModalTemperaturaNroHojas">Ver
             detalle</button>
           <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
@@ -320,7 +322,7 @@
         </div>
         <div class="modal-body">
 
-          <canvas id="chart1gNroHojas" style="width:100% ;height: 50vh"></canvas>
+          <canvas id="chart1gNroHojas"  width="50%" height="20vh"></canvas>
 
           <script type="module">
             function totalCasesChart(ctx) {
@@ -484,7 +486,7 @@
         </div>
         <div class="modal-body">
 
-          <canvas id="chart3gNroHojas" style="width:100% ;height: 50vh"></canvas>
+          <canvas id="chart3gNroHojas"  width="50%" height="20vh"></canvas>
 
           <script type="module">
             function totalCasesChart(ctx) {

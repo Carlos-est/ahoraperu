@@ -12,11 +12,10 @@
 
   <div class="card">
     <div class="card-header">
-      <h3 class="card-title">Peso potencial de racimo - Estación: {{estacionName}} </h3>
+      <h3 class="card-title text-center">Peso potencial de racimo - Estación: {{estacionName}} </h3>
     </div>
     <div class="card-body">
       <h6 class="card-title">Estimación del peso potencial de racimo para la fecha de cosecha especificada.</h6>
-      <!-- <p class="card-text">Se realiza un cálculo de las hojas potenciales desde la cosecha hasta la fecha actual</p> -->
       <div class="row">
         <div class="col-md-12">
           <div class="card text-center">
@@ -25,17 +24,14 @@
               <p class="card-category"></p>
             </div>
           </div>
-          <div class="card-body flex-column">
-            <div class="alert alert-success alert-dismissible fade show p-2" role="alert">
-              <h5>Para la fecha de cosecha {{fec_string}} y un periodo de llenado de {{semanas}} semanas, el peso
-                potencial del racimo debió ser de {{biomasa_planta}} kg por planta o {{biomasa}} toneladas por hectárea
-              </h5>
-            </div>
+        </div>
+        <div class="col-md-12 flex-column">
+          <div class="alert alert-success alert-dismissible fade show p-2" role="alert">
+            <h5>Para la fecha de cosecha {{fec_string}} y un periodo de llenado de {{semanas}} semanas, el peso
+              potencial del racimo debió ser de {{biomasa_planta}} kg por planta o {{biomasa}} toneladas por hectárea
+            </h5>
           </div>
         </div>
-        <!-- <div class="col-md-6">
-
-        </div> -->
       </div>
 
     </div>

@@ -5,21 +5,18 @@
 <!-- Specific Page CSS goes HERE  -->
 {% block stylesheets %}{% endblock stylesheets %}
 
-{% block content %} 
+{% block content %}
 
 <div id="content-wrapper" class="d-flex flex-column ubicacion">
 
   {% include 'includes/topbarHide.html' %}
 
   <div class="card">
-    <div class="card-header">
+    <div class="card-header text-center">
       <h3 class="card-title">Fecha aproximada en la que ocurrió la floración - Estación: {{estacionName}}</h3>
     </div>
     <div class="card-body">
-      <!-- <h6 class="card-title">Se calcula el número de semanas que le tomó recolectar 900 Grados días acumulados para estimar la fecha de floración anterior</h6> -->
       <h6 class="card-title">Fecha de floración estimada teniendo en cuenta la acumulación de grados día. </h6>
-      <!-- <p class="card-text">Se calcula el número de semanas que le tomó recolectar 900 Grados días acumulados para estimar la fecha de floración anterior</p> -->
-
       <div class="row">
         <div class="col-md-12">
           <div class="card text-center">
@@ -30,22 +27,22 @@
         </div>
 
       </div>
-    
-      <div class="alert alert-success alert-dismissible fade show" role="alert">
-        <!-- Se acumularon {{valor1B}} GD desde la fecha {{valor2B}} hasta la fecha de cosecha ingresada {{fechaCosecha}}. Le tomó {{valor3B}} semanas -->
-        <h5 class="text-justify">
-
-          Tomando como fecha de cosecha el {{fechaCosecha}}, se estima que la fecha aproximada de floración fue el {{fecha_floracion}}. 
-          Se acumularon {{GDA}} grados día en {{nSemanas}} semanas.
-      
-        </h5>
+      <div class="col-md-12 flex-column">
+        <div class="alert alert-success alert-dismissible fade show p-2" role="alert">
+          <h5>
+            Tomando como fecha de cosecha el {{fechaCosecha}}, se estima que la fecha aproximada de floración fue el
+            {{fecha_floracion}}.
+            Se acumularon {{GDA}} grados día en {{nSemanas}} semanas.
+          </h5>
+        </div>
       </div>
     </div>
   </div>
 
   <div class="row justify-content-center">
-    <h6 class="card-title">A continuación, se informa la variación diaria de la temperatura y la acumulación de grados día, desde la fecha calculada en que ocurrió la floración hasta la fecha de la última cosecha. </h6>
-    
+    <h6 class="card-title">A continuación, se informa la variación diaria de la temperatura y la acumulación de grados
+      día, desde la fecha calculada en que ocurrió la floración hasta la fecha de la última cosecha. </h6>
+
     <div class="col-md-4">
       <div class="card text-center">
         <div class="card-body">
@@ -54,40 +51,40 @@
           <script type="module">
             function totalCasesChart(ctx) {
               //const { temp1, temp2 } = data;
-  
+
               const chart = new Chart(ctx, {
-  
+
                 type: 'line',
                 data: {
-  
+
                   labels: {{ fechasBackward| safe}},
             datasets: [
-  
+
               {
-  
+
                 label: "Temperatura promedio",
                 data: {{ tempPromedioBackward| safe}},
               fill: false,
               borderColor: 'blue',
               lineTension: 0.1
                     },
-  
+
             ]
                 },
-  
+
             options: {
               scales: {
-  
+
                 xAxes: [{
-  
+
                   gridLines: {
                     display: false,
                   }
                 }]
               },
               responsive: true
-  
-  
+
+
             },
             legend: {
               position: 'bottom',
@@ -103,7 +100,7 @@
                 right: 50,
       
                   }
-  
+
             },
             tooltips: {
               backgroundColor: '#0584f6',
@@ -115,14 +112,14 @@
                           mode: 'x'
             },
             elements: {
-  
+
               line: {
                 borderWidth: 8,
                   fill: false
-  
+
               },
               point: {
-  
+
                 radius: 6,
                   borderWidth: 4,
                     backgroundColor: 'white',
@@ -135,48 +132,49 @@
               });
       
             }
-  
+
             function renderCharts() {
-  
+
               const ctx = document.querySelector('#chartTemperaturaBackward').getContext('2d');
               totalCasesChart(ctx);
-  
+
             }
-  
+
             renderCharts();
-  
+
           </script>
-  
+
           <!-- <a href="#" class="btn btn-info btn-sm" data-toggle="modal" data-target="myModalTemperatura">Ver detalle</a> -->
-          <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModalTemperaturaBackward">Ver
+          <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
+            data-target="#myModalTemperaturaBackward">Ver
             detalle</button>
           <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
             data-target="#myModalGraficoTemperaturaBackward">Ampliar gráfico</button>
-  
+
         </div>
       </div>
     </div>
-  
- 
+
+
     <div class="col-md-4">
       <div class="card text-center">
         <div class="card-body">
           <h5 class="card-title">Grados día</h5>
           <canvas id="chartGradosDiaBackward" style="width:100% ;height: 30vh"></canvas>
-  
+
           <script type="module">
-  
-        
+
+
             function totalCasesChart(ctx) {
-  
+
               const chart = new Chart(ctx, {
-  
+
                 type: 'line',
                 data: {
-  
+
                   labels: {{ fechasBackward| safe}},
             datasets: [
-  
+
               {
                 label: "Grados día Acumulado",
                 data: {{ gradosDiaBackward| safe}},
@@ -185,29 +183,29 @@
               lineTension: 0.1
             // borderDash:[1,10]
                     },
-  
-  
+
+
             ]
                 },
-  
+
             options: {
               scales: {
-  
+
                 xAxes: [{
-  
+
                   gridLines: {
                     display: false,
                   }
                 }]
               },
               responsive: true
-  
-  
+
+
             },
             legend: {
               position: 'bottom',
                 labels: {
-  
+
                 padding: 20,
                   boxWidth: 15,
                     fontFamily: 'system-ui',
@@ -219,7 +217,7 @@
                 right: 50,
   
                   }
-  
+
             },
             tooltips: {
               backgroundColor: '#0584f6',
@@ -231,14 +229,14 @@
                           mode: 'x'
             },
             elements: {
-  
+
               line: {
                 borderWidth: 8,
                   fill: false
-  
+
               },
               point: {
-  
+
                 radius: 6,
                   borderWidth: 4,
                     backgroundColor: 'white',
@@ -251,28 +249,29 @@
               });
   
             }
-  
+
             function renderCharts() {
-  
+
               const ctx = document.querySelector('#chartGradosDiaBackward').getContext('2d');
               totalCasesChart(ctx);
-  
+
             }
-  
+
             renderCharts();
-  
+
           </script>
-  
-          <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModalGradosdiaBackward">Ver
+
+          <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
+            data-target="#myModalGradosdiaBackward">Ver
             detalle</button>
           <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
             data-target="#myModalGraficoGradosdiaBackward">Ampliar gráfico</button>
-  
+
         </div>
       </div>
-  
+
     </div>
-  
+
   </div>
 
 
@@ -335,7 +334,7 @@
         </div>
         <div class="modal-body">
 
-          <canvas id="chart1gNroHojas" style="width:100% ;height: 50vh"></canvas>
+          <canvas id="chart1gNroHojas"  width="50%" height="20vh"></canvas>
 
           <script type="module">
             function totalCasesChart(ctx) {
@@ -444,7 +443,8 @@
     </div>
   </div>
 
-  <div class="modal" tabindex="-1" id="myModalGradosdiaNroHojas" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal" tabindex="-1" id="myModalGradosdiaNroHojas" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable">
 
       <div class="modal-content">
@@ -496,7 +496,7 @@
         </div>
         <div class="modal-body">
 
-          <canvas id="chart3gNroHojas" style="width:100% ;height: 50vh"></canvas>
+          <canvas id="chart3gNroHojas"  width="50%" height="20vh"></canvas>
 
           <script type="module">
             function totalCasesChart(ctx) {
@@ -661,7 +661,7 @@
         </div>
         <div class="modal-body">
 
-          <canvas id="chart1gBackward" style="width:100% ;height: 50vh"></canvas>
+          <canvas id="chart1gBackward"  width="50%" height="20vh"></canvas>
 
           <script type="module">
             function totalCasesChart(ctx) {
@@ -770,7 +770,8 @@
     </div>
   </div>
 
-  <div class="modal" tabindex="-1" id="myModalGradosdiaBackward" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal" tabindex="-1" id="myModalGradosdiaBackward" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable">
 
       <div class="modal-content">
@@ -822,7 +823,7 @@
         </div>
         <div class="modal-body">
 
-          <canvas id="chart3gBackward" style="width:100% ;height: 50vh"></canvas>
+          <canvas id="chart3gBackward"  width="50%" height="20vh"></canvas>
 
           <script type="module">
             function totalCasesChart(ctx) {

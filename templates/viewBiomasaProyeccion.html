@@ -11,7 +11,7 @@
   {% include 'includes/topbarHide.html' %}
 
   <div class="card">
-    <div class="card-header">
+    <div class="card-header text-center">
       <h3 class="card-title">Peso potencial de racimo - Estación: {{estacionName}} </h3>
     </div>
     <div class="card-body">
@@ -24,23 +24,15 @@
               <h5 class="card-title">Información</h5>
               <p class="card-category"></p>
             </div>
-            <div class="card-body">
-              <div class="alert alert-success alert-dismissible fade show" role="alert">
-                <!-- <h5>Desde la fecha de cosecha {{fechaCosecha}} han crecido: {{valorNroHojas}} hojas potenciales.</h5> -->
-                <!-- <h5>Desde la fecha {{valor1}} al día de hoy se han producido {{valor2}} Kg. por planta, {{valor3}} Kg. por hectárea</h5>
-                -->
-                <h5>Desde la fecha de floración {{fec}} se proyecta que el peso potencial del racimo debe ser
-                    {{biomasa_planta}} kg por planta o {{biomasa}} toneladas por hectárea.
-                </h5>
-                
-              </div>
-      
-            </div>
           </div>
         </div>
-        <!-- <div class="col-md-6">
-
-        </div> -->
+      </div>
+      <div class="col-md-12 flex-column">
+        <div class="alert alert-success alert-dismissible fade show p-2" role="alert">
+          <h5>Desde la fecha de floración {{fec}} se proyecta que el peso potencial del racimo debe ser
+              {{biomasa_planta}} kg por planta o {{biomasa}} toneladas por hectárea.
+          </h5>
+        </div>
       </div>
     
     </div>
