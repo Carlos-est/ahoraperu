@@ -10,11 +10,12 @@
 <div id="content-wrapper" class="d-flex flex-column ubicacion">
 
     {% include 'includes/topbarHide.html' %}
-
     <div class="card">
-        <div class="card-header">
+        <div class="card-header text-center">
             <h3 class="card-title">Demanda de agua de banano (7 días) - Estación: {{estacionName}} </h3>
         </div>
+    </div>
+    <div class="card">
         <div class="card-body">
             <div class="row">
                 <div class="col-md-12">
@@ -23,130 +24,133 @@
                             <h5 class="card-title">¿Cuánta agua usó el bananal durante los (7) días de cálculo?</h5>
                             <p class="card-category"></p>
                         </div>
-                        <div class="card-body">
-                            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                <h5>Para los 7 días finalizando el {{fechaFinal}}, un campo de banano establecido usó
-                                    {{evapoAcumulada}} mm de agua.</h5>
-                                </h5>
-                            </div>
-
-                        </div>
-                    </div>
-                    <div class="row justify-content-center">
-                        <div class="col-md-4">
-                            <div class="card text-center">
-                                <div class="card-body">
-                                    <h5 class="card-title">Evapotranspiración del cultivo</h5>
-                                    <canvas id="chartTemperaturaNroHojas" style="width:100% ;height: 30vh"></canvas>
-                                    <script type="module">
-                                        function totalCasesChart(ctx) {
-                                            //const { temp1, temp2 } = data;
-
-                                            const chart = new Chart(ctx, {
-
-                                                type: 'line',
-                                                data: {
-
-                                                    labels: {{ fechas| safe}},
-                                        datasets: [
-
-                                            {
-
-                                                label: "Evapotranspiración del cultivo",
-                                                data: {{ evap| safe}},
-                                            fill: false,
-                                            borderColor: 'blue',
-                                            lineTension: 0.1
-                                  },
-
-                                        ]
-                              },
-
-                                        options: {
-                                            scales: {
-
-                                                xAxes: [{
-
-                                                    gridLines: {
-                                                        display: false,
-                                                    }
-                                                }]
-                                            },
-                                            responsive: true
-
-
-                                        },
-                                        legend: {
-                                            position: 'bottom',
-                                                labels: {
-                                                padding: 20,
-                                                    boxWidth: 15,
-                                                        fontFamily: 'system-ui',
-                                                            fontColor: 'black',
-                                }
-                                        },
-                                        layout: {
-                                            padding: {
-                                                right: 50,
-                    
-                                }
-
-                                        },
-                                        tooltips: {
-                                            backgroundColor: '#0584f6',
-                                                titleFontSize: 20,
-                                                    xPaddding: 20,
-                                                        yPadding: 20,
-                                                            bodyFontSize: 15,
-                                                                bodySpacing: 10,
-                                                                    mode: 'x'
-                                        },
-                                        elements: {
-
-                                            line: {
-                                                borderWidth: 8,
-                                                    fill: false
-
-                                            },
-                                            point: {
-
-                                                radius: 6,
-                                                    borderWidth: 4,
-                                                        backgroundColor: 'white',
-                                                            hoverRadius: 8,
-                                                                hoverBorderWidth: 4
-                                            }
-                                        }
-                    
-                    
-                            });
-                    
-                          }
-
-                                        function renderCharts() {
-
-                                            const ctx = document.querySelector('#chartTemperaturaNroHojas').getContext('2d');
-                                            totalCasesChart(ctx);
-
-                                        }
-
-                                        renderCharts();
-
-                                    </script>
-
-                                    <!-- <a href="#" class="btn btn-info btn-sm" data-toggle="modal" data-target="myModalTemperatura">Ver detalle</a> -->
-                                    <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
-                                        data-target="#myModalTemperaturaNroHojas">Ver
-                                        detalle</button>
-                                    <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
-                                        data-target="#myModalGraficoTemperaturaNroHojas">Ampliar gráfico</button>
-
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
+            <div class="col-md-12 flex-column">
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <h5>Para los 7 días finalizando el {{fechaFinal}}, un campo de banano establecido usó
+                        {{evapoAcumulada}} mm de agua.</h5>
+                    </h5>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-md-4">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h5 class="card-title">Evapotranspiración del cultivo</h5>
+                    <canvas id="chartTemperaturaNroHojas" style="width:100% ;height: 30vh"></canvas>
+                    <script type="module">
+                        function totalCasesChart(ctx) {
+                            //const { temp1, temp2 } = data;
+
+                            const chart = new Chart(ctx, {
+
+                                type: 'line',
+                                data: {
+
+                                    labels: {{ fechas| safe}},
+                        datasets: [
+
+                            {
+
+                                label: "Evapotranspiración del cultivo",
+                                data: {{ evap| safe}},
+                            fill: false,
+                            borderColor: 'blue',
+                            lineTension: 0.1
+                  },
+
+                        ]
+              },
+
+                        options: {
+                            scales: {
+
+                                xAxes: [{
+
+                                    gridLines: {
+                                        display: false,
+                                    }
+                                }]
+                            },
+                            responsive: true
+
+
+                        },
+                        legend: {
+                            position: 'bottom',
+                                labels: {
+                                padding: 20,
+                                    boxWidth: 15,
+                                        fontFamily: 'system-ui',
+                                            fontColor: 'black',
+                }
+                        },
+                        layout: {
+                            padding: {
+                                right: 50,
+    
+                }
+
+                        },
+                        tooltips: {
+                            backgroundColor: '#0584f6',
+                                titleFontSize: 20,
+                                    xPaddding: 20,
+                                        yPadding: 20,
+                                            bodyFontSize: 15,
+                                                bodySpacing: 10,
+                                                    mode: 'x'
+                        },
+                        elements: {
+
+                            line: {
+                                borderWidth: 8,
+                                    fill: false
+
+                            },
+                            point: {
+
+                                radius: 6,
+                                    borderWidth: 4,
+                                        backgroundColor: 'white',
+                                            hoverRadius: 8,
+                                                hoverBorderWidth: 4
+                            }
+                        }
+    
+    
+            });
+    
+          }
+
+                        function renderCharts() {
+
+                            const ctx = document.querySelector('#chartTemperaturaNroHojas').getContext('2d');
+                            totalCasesChart(ctx);
+
+                        }
+
+                        renderCharts();
+
+                    </script>
+
+                    <!-- <a href="#" class="btn btn-info btn-sm" data-toggle="modal" data-target="myModalTemperatura">Ver detalle</a> -->
+                    <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
+                        data-target="#myModalTemperaturaNroHojas">Ver
+                        detalle</button>
+                    <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
+                        data-target="#myModalGraficoTemperaturaNroHojas">Ampliar gráfico</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body">
             <div class="row">
                 <div class="col-md-12">
                     <div class="card text-center">
@@ -156,142 +160,137 @@
                                 cálculo?</h5>
                             <p class="card-category"></p>
                         </div>
-                        <div class="card-body">
-                            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                <h5>Para los 7 días finalizando el {{fechaFinal}}, un campo de banano
-                                    establecido faltó
-                                    {{deficit}} mm de agua.</h5>
-                                </h5>
-                            </div>
-
-                        </div>
-                    </div>
-                    <div class="row justify-content-center">
-                        <div class="col-md-4">
-                            <div class="card text-center">
-                                <div class="card-body">
-                                    <h5 class="card-title">LLuvia (mm)</h5>
-                                    <canvas id="chartlluvias" style="width:100% ;height: 30vh"></canvas>
-                                    <script type="module">
-                                        function totalCasesChart(ctx) {
-                                            //const { temp1, temp2 } = data;
-
-                                            const chart = new Chart(ctx, {
-
-                                                type: 'line',
-                                                data: {
-
-                                                    labels: {{ fechas| safe}},
-                                        datasets: [
-
-                                            {
-
-                                                label: "Lluvia (mm)",
-                                                data: {{ rain| safe}},
-                                            fill: false,
-                                            borderColor: 'blue',
-                                            lineTension: 0.1
-                      },
-
-                                        ]
-                  },
-
-                                        options: {
-                                            scales: {
-
-                                                xAxes: [{
-
-                                                    gridLines: {
-                                                        display: false,
-                                                    }
-                                                }]
-                                            },
-                                            responsive: true
-
-
-                                        },
-                                        legend: {
-                                            position: 'bottom',
-                                                labels: {
-                                                padding: 20,
-                                                    boxWidth: 15,
-                                                        fontFamily: 'system-ui',
-                                                            fontColor: 'black',
-                    }
-                                        },
-                                        layout: {
-                                            padding: {
-                                                right: 50,
-        
-                    }
-
-                                        },
-                                        tooltips: {
-                                            backgroundColor: '#0584f6',
-                                                titleFontSize: 20,
-                                                    xPaddding: 20,
-                                                        yPadding: 20,
-                                                            bodyFontSize: 15,
-                                                                bodySpacing: 10,
-                                                                    mode: 'x'
-                                        },
-                                        elements: {
-
-                                            line: {
-                                                borderWidth: 8,
-                                                    fill: false
-
-                                            },
-                                            point: {
-
-                                                radius: 6,
-                                                    borderWidth: 4,
-                                                        backgroundColor: 'white',
-                                                            hoverRadius: 8,
-                                                                hoverBorderWidth: 4
-                                            }
-                                        }
-        
-        
-                });
-        
-              }
-
-                                        function renderCharts() {
-
-                                            const ctx = document.querySelector('#chartlluvias').getContext('2d');
-                                            totalCasesChart(ctx);
-
-                                        }
-
-                                        renderCharts();
-
-                                    </script>
-
-                                    <!-- <a href="#" class="btn btn-info btn-sm" data-toggle="modal" data-target="myModalTemperatura">Ver detalle</a> -->
-                                    <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
-                                        data-target="#myModalLluvia">Ver
-                                        detalle</button>
-                                    <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
-                                        data-target="#myModalGraficoLluvia">Ampliar
-                                        gráfico
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
                     </div>
 
+                </div>
+            </div>
+            <div class="col-md-12 flex-column">
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <h5>Para los 7 días finalizando el {{fechaFinal}}, un campo de banano
+                        establecido faltó
+                        {{deficit}} mm de agua.</h5>
+                    </h5>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-md-4">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h5 class="card-title">LLuvia (mm)</h5>
+                    <canvas id="chartlluvias" style="width:100% ;height: 30vh"></canvas>
+                    <script type="module">
+                        function totalCasesChart(ctx) {
+                            //const { temp1, temp2 } = data;
+
+                            const chart = new Chart(ctx, {
+
+                                type: 'line',
+                                data: {
+
+                                    labels: {{ fechas| safe}},
+                        datasets: [
+
+                            {
+
+                                label: "Lluvia (mm)",
+                                data: {{ rain| safe}},
+                            fill: false,
+                            borderColor: 'blue',
+                            lineTension: 0.1
+            },
+
+                        ]
+        },
+
+                        options: {
+                            scales: {
+
+                                xAxes: [{
+
+                                    gridLines: {
+                                        display: false,
+                                    }
+                                }]
+                            },
+                            responsive: true
+
+
+                        },
+                        legend: {
+                            position: 'bottom',
+                                labels: {
+                                padding: 20,
+                                    boxWidth: 15,
+                                        fontFamily: 'system-ui',
+                                            fontColor: 'black',
+            }
+                        },
+                        layout: {
+                            padding: {
+                                right: 50,
+
+            }
+
+                        },
+                        tooltips: {
+                            backgroundColor: '#0584f6',
+                                titleFontSize: 20,
+                                    xPaddding: 20,
+                                        yPadding: 20,
+                                            bodyFontSize: 15,
+                                                bodySpacing: 10,
+                                                    mode: 'x'
+                        },
+                        elements: {
+
+                            line: {
+                                borderWidth: 8,
+                                    fill: false
+
+                            },
+                            point: {
+
+                                radius: 6,
+                                    borderWidth: 4,
+                                        backgroundColor: 'white',
+                                            hoverRadius: 8,
+                                                hoverBorderWidth: 4
+                            }
+                        }
+
+
+        });
+
+    }
+
+                        function renderCharts() {
+
+                            const ctx = document.querySelector('#chartlluvias').getContext('2d');
+                            totalCasesChart(ctx);
+
+                        }
+
+                        renderCharts();
+
+                    </script>
+
+                    <!-- <a href="#" class="btn btn-info btn-sm" data-toggle="modal" data-target="myModalTemperatura">Ver detalle</a> -->
+                    <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
+                        data-target="#myModalLluvia">Ver
+                        detalle</button>
+                    <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
+                        data-target="#myModalGraficoLluvia">Ampliar
+                        gráfico
+                    </button>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-</div>
-
-
-</div>
-</div>
 
 <div class="modal" tabindex="-1" id="myModalTemperaturaNroHojas" role="dialog" aria-labelledby="myModalLabel"
     aria-hidden="true">
@@ -347,7 +346,7 @@
             </div>
             <div class="modal-body">
 
-                <canvas id="chart1gNroHojas" style="width:100% ;height: 50vh"></canvas>
+                <canvas id="chart1gNroHojas"  width="50%" height="20vh""></canvas>
 
                 <script type="module">
                     function totalCasesChart(ctx) {
@@ -509,7 +508,7 @@
             </div>
             <div class="modal-body">
 
-                <canvas id="chartLluvia" style="width:100% ;height: 50vh"></canvas>
+                <canvas id="chartLluvia"  width="50%" height="20vh""></canvas>
 
                 <script type="module">
                     function totalCasesChart(ctx) {
