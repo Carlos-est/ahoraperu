@@ -107,8 +107,8 @@ def nutrientes(fec, estacion, rPA, semanas):
         vector_gda_acum.append(GDA_acum)
         vector_fecha.append(fecha)
         Vector_datos.append((fecha,round(GDA_acum,2), round(ES_ACUMULADO,2)))
-        if GDA_acum >= 900:
-            break
+        """ if GDA_acum >= 900:
+            break """
 
     #print("Datos:",Vector_datos)
     matSeca = 1.5*ES_ACUMULADO*(1-np.exp(-0.7*3.5)) #g
