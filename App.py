@@ -209,6 +209,8 @@ def viewBiomasaProyeccion():
     estacionName=dict_estaciones[estacion] #BUSCA LA ESTACION 
     session['estacionName'] = estacionName
     fec, fec_final,biomasa_planta, biomasa, estimacion, semanas = terceraFuncion.EstimacionRacimoProyeccion(fechaFloracion, int(estacion),int(rPa), int(Cant_manos), int(nro_semanas))
+    Cant_manos=int(Cant_manos)
+    nro_semanas = int(nro_semanas)
     if estimacion == 0:
         flash('Error: Verifique los datos ingresados')
         #return render_template("formError.html", e=e), 500 
@@ -219,7 +221,7 @@ def viewBiomasaProyeccion():
 
     return render_template(file_selector,fec = fec, fec_final = fec_final, 
     biomasa_planta=biomasa_planta,biomasa=biomasa,semanas=semanas, estimacion=estimacion, 
-    estacionName = estacionName)
+    estacionName = estacionName, Cant_manos=Cant_manos, nro_semanas=nro_semanas)
 
 
 
