@@ -170,7 +170,7 @@ def BD_MONGO_BIOMASA_F2(pais, estacion, fec_unix_usuario): ###regresa valores me
     except pymongo.errors.ConnectionFailure as errorConnexion:
         return("Fallo al conectarse a mongodb" + errorConnexion)
 
-def EstimacionRacimoProyeccion(fec, estacion,rPA, Cant_manos):
+def EstimacionRacimoProyeccion(fec, estacion,rPA, Cant_manos, nro_semanas):
     pais = 1 #1 peru
     print("Fecha ingresada por el usuario:", fec)
     #convertimos a string y unix y restamos el dia de consulta
@@ -182,6 +182,11 @@ def EstimacionRacimoProyeccion(fec, estacion,rPA, Cant_manos):
     GDA_acum = 0
     gdd = 0
     ES_ACUMULADO=0
+    i = len(datos)
+    cant_dias = 7*nro_semanas
+    contador = 0
+    print("i:", i)
+    print("cantidad_dias:", cant_dias)
     for k in datos:
         gdd = k["Datos"]["GDD_D"]
         GDA_acum += gdd
@@ -190,30 +195,34 @@ def EstimacionRacimoProyeccion(fec, estacion,rPA, Cant_manos):
         ES_ACUMULADO += energia_solar
 
         Vector_datos.append((fecha, round(GDA_acum,2), round(ES_ACUMULADO,2)))
-        if GDA_acum >= 900:
+        contador += 1
+        if contador > cant_dias:
             break#print("valor de k1:", k, "sumatoria:", GDA_acum)
     #print("GDA ACUMULADO PARA DESICIÓN::", GDA_acum) 
     #
-    if GDA_acum <900:
+    if cant_dias >= contador:
         GDA_DATOS_REALES=GDA_acum
         datos_tomados=int(len(Vector_datos)) #dias tomados en cuenta
         gda_promedio = GDA_acum/datos_tomados
         esolar_promedio = ES_ACUMULADO/datos_tomados
-        gda_Restantes = 900-GDA_acum
-        estimacion = math.ceil(gda_Restantes/gda_promedio)
+        #gda_Restantes = 900-GDA_acum
+        dias_restantes= cant_dias-contador
+        #estimacion = math.ceil(gda_Restantes/gda_promedio)
+
         #estimacion de energia solar para el futuro
-        estimacionESolar = estimacion*esolar_promedio
+        estimacionESolar = dias_restantes*esolar_promedio
         esolarTotal = ES_ACUMULADO + estimacionESolar
-        dias_totales = datos_tomados + estimacion
+        dias_totales = datos_tomados + dias_restantes
         fec_final = fec_date + timedelta(dias_totales)
         fec_final = fec_final.strftime("%d/%m/%Y")
-        nSemanas=round((estimacion)/7, 2)
+        nSemanas=round((dias_restantes)/7, 2)
         #1.5g es lo que se genera por cada 1MJ/m2 absorvido
         matSeca = 1.5*esolarTotal*(1-np.exp(-0.7*3.5)) #g
         #0.25 es biomasa seca de de toda la planta y divimos entre 1000 para convertir el resultado a kg
         biomasa_planta = matSeca*((10000/rPA)/1000)/0.25 #resultado en kg
         biomasa_planta=round((biomasa_planta*(Cant_manos/13)),1)
         biomasa = round(biomasa_planta*rPA,1)/1000
+        estimacion = dias_restantes
         return  fec_string_usuario,fec_final,biomasa_planta ,biomasa ,estimacion, nSemanas
     
     else:

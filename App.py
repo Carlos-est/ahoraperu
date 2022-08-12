@@ -195,20 +195,24 @@ def viewBiomasaProyeccion():
   if request.method == 'POST':
     fechaFloracion = request.form['fechaFloracion']    
     Cant_manos = request.form['Cant_manos']
+    nro_semanas = request.form['nro_semanas']
     rPa = request.form['rPa']    
     estacion = request.form['cmbEstacion']
     session['Cant_manos'] = Cant_manos
     session['rPa'] = rPa
     session['fechaFloracion'] = fechaFloracion
     session['estacion'] = estacion
-   
+    session['nro_semanas'] = nro_semanas
+
     fechaFloracion = funcionesGenerales.cambiar_formato_fecha(fechaFloracion)
     dict_estaciones = {"1":"Chulucanas","2":"otras"}
     estacionName=dict_estaciones[estacion] #BUSCA LA ESTACION 
     session['estacionName'] = estacionName
-    fec, fec_final,biomasa_planta, biomasa, estimacion, semanas = terceraFuncion.EstimacionRacimoProyeccion(fechaFloracion, int(estacion),int(rPa), int(Cant_manos))
+    fec, fec_final,biomasa_planta, biomasa, estimacion, semanas = terceraFuncion.EstimacionRacimoProyeccion(fechaFloracion, int(estacion),int(rPa), int(Cant_manos), int(nro_semanas))
     if estimacion == 0:
-        file_selector = 'viewBiomasaProyeccion-1.html'
+        flash('Error: Verifique los datos ingresados')
+        #return render_template("formError.html", e=e), 500 
+        file_selector = 'formError.html'
 
     else:
         file_selector = 'viewBiomasaProyeccion.html'   

@@ -33,7 +33,7 @@ def convert_formato_fecha(fec):
     
     return(fec, fec_unix)
 
-     
+### OPCION 1 CALCULO DE 14 Y 28 DIAS
 def BD_MONGOF1(pais, estacion, fec_unix_usuario):
     fec14_unix = fec_unix_usuario-14*86400
     fec28_unix = fec_unix_usuario-28*86400
@@ -147,7 +147,6 @@ def BD_MONGOF1(pais, estacion, fec_unix_usuario):
     except pymongo.errors.ConnectionFailure as errorConnexion:
         return("Fallo al conectarse a mongodb" + errorConnexion)
 
-#enviamos a cambiar formato a la fecha
 def NumeroHojas(fec, estacion):
     pais = 1 #1 peru
     print("Fecha ingresada por el usuario:", fec)
