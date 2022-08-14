@@ -158,7 +158,7 @@ def EstimacionFechaFloracion(fec, estacion):
     vector_gda=list(reversed(vector_gda))
     for k in range(len(vector_fecha)):
         GDA_ACUMULADO += vector_gda[k]
-        Vector_datos.append((vector_fecha[k], round(vector_temp[k],2), round(GDA_ACUMULADO,2)))
+        Vector_datos.append((vector_fecha[k], round(vector_temp[k],1), round(GDA_ACUMULADO,1)))
     nSemanas=round((len(Vector_datos))/7, 1)
     return round(GDA_acum), fecha, nSemanas , Vector_datos
 
