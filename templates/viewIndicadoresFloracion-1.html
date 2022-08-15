@@ -31,10 +31,10 @@
               <h5 class="card-title">Información</h5>
               <p class="card-category"></p>
             </div>
-            <div class="card-body">
-              <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <div class="col-md-12 flex-column">
+              <div class="alert alert-success alert-dismissible fade show p-2" role="alert">
             <!-- <h5>Se han acumulado {{valor1}} GD desde la fecha de floración {{valor2}} y la fecha estimada para completar los 900 GD es {{valor3}}, faltan {{estimacion}} días </h5> -->
-            <h5>Desde fecha de floración <strong><em>{{valor2}}</em></strong>. Se acumuló {{valor1}} grados día el <strong><em>{{valor3}}</em></strong> (fecha óptima de cosecha estimada).</h5>
+            <h5 class="text-center">Desde fecha de floración <strong><em>{{valor2}}</em></strong>. Se acumuló {{valor1}} grados día el <strong><em>{{valor3}}</em></strong> (fecha óptima de cosecha estimada).</h5>
 
           </div>
             </div> 
@@ -51,7 +51,7 @@
           <div class="card text-center">
             <div class="card-body">
               <h5 class="card-title">Temperatura</h5>
-              <canvas id="chart1" style="width:100% ;height: 25vh"></canvas>
+              <canvas id="chart1" style="width:100% ;height: 30vh"></canvas>
               <script type="module">
                 function totalCasesChart(ctx) {
                   //const { temp1, temp2 } = data;
@@ -164,7 +164,7 @@
           <div class="card text-center">
             <div class="card-body">
               <h5 class="card-title">Grados día</h5>
-              <canvas id="chart3" style="width:100% ;height: 25vh"></canvas>
+              <canvas id="chart3" style="width:100% ;height: 30vh"></canvas>
       
               <script type="module">
       
