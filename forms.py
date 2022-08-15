@@ -28,5 +28,5 @@ class FormNutrientes(FlaskForm):
     intervalo = h5fields.IntegerField("A las cuantas semanas cosechó el racimo (9,10,11,12 o 13):", widget=h5widgets.NumberInput(min=9, max=13), validators=(DataRequired(),))
 
 class FormRiego(FlaskForm):
-    dias = h5fields.IntegerField("Número de días que normalmente pasan entre dos riegos (7, 14, 28):", widget=h5widgets.NumberInput(min=7, max=45, step=1), validators=(DataRequired(),))
+    dias = h5fields.IntegerField("Número de días que normalmente pasan entre dos riegos (1-45):", widget=h5widgets.NumberInput(min=1, max=45, step=1), validators=(DataRequired(),))
     fechaFinal = DateField('Fecha final del periodo:', format='%Y-%m-%d', validators=(DataRequired(),))
