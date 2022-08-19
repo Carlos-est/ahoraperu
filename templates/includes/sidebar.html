@@ -1,7 +1,7 @@
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
-    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/">
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/home">
         <div class="sidebar-brand-icon">
             <!-- <img src="imgs/logo.png" alt=""> -->
             <img src="/static/assets/img/logo2.png" alt="">
@@ -15,7 +15,7 @@
 
     <!-- Nav Item - Dashboard -->
     <li class="nav-item active">
-        <a class="nav-link" href="/">
+        <a class="nav-link" href="/home">
             <!-- <i class="fas fa-fw fa-tachometer-alt"></i> -->
             <!-- <i class='bx fa-fw bxs-grid-alt'></i> -->
             <i class="fas fa-fw fa-compass"></i>
@@ -100,9 +100,7 @@
         <div id="collapseFeed" class="collapse" aria-labelledby="headingFeed" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Cálculo de:</h6>
-                <!-- <a class="collapse-item" href="buttons.html">-GDS hacia atrás</a> -->
                 <a class="collapse-item" href="/formNutrientes">-Cantidad de <br> Nutrientes (N, P, K, Ca...)</a>
-                <!-- <a class="collapse-item" href="/formIndicadoresFloracion">-Fecha de floración</a> -->
             </div>
         </div>
     </li>
@@ -113,10 +111,6 @@
             aria-expanded="true" aria-controls="collapseUtilities">
             <!-- <i class="fas fa-fw fa-wrench"></i> -->
             <i class="fas fa-fw fa-hand-holding-water"></i>
-            <!-- <i class="fas fa-fw fa-charging-station"></i> -->
-            <!-- <i class="fas fa-fw fa-ruler"></i> -->
-            <!-- <i class="fas fa-fw fa-cloud-sun-rain"></i> -->
-            <!-- <i class='bx fa-fw bxs-tachometer'></i> -->
             <span>Riego</span>
         </a>
         <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
@@ -135,31 +129,41 @@
     <!-- Divider -->
     <hr class="sidebar-divider">
 
-    <!-- Heading -->
-    <!-- <div class="sidebar-heading">
-      Otros
-  </div> -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseHelp" aria-expanded="true"
+            aria-controls="collapseUtilities">
+            <i class="fa-solid fa-circle-info"></i>
+            <span>Soporte</span>
+        </a>
+        <div id="collapseHelp" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item" href="">-Manual de funciones</a>
+            </div>
+        </div>
+    </li>
 
-    <!-- Nav Item - Charts -->
-    <!-- <li class="nav-item">
-      <a class="nav-link" href="/"> -->
-    <!-- <i class="fas fa-fw fa-chart-area"></i> -->
-    <!-- <i class='bx fa-fw bxs-book'></i> -->
-    <!-- <i class='bx fa-fw bxs-backpack'></i> -->
-    <!-- <i class='bx fa-fw bxs-food-menu'></i> -->
-    <!-- <span>Manual</span></a>
-  </li> -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseComentarios"
+            aria-expanded="true" aria-controls="collapseUtilities">
+            <i class="fa-solid fa-comment-dots"></i>
+            <span>Comentarios</span>
+        </a>
+        <div id="collapseComentarios" class="collapse" aria-labelledby="headingUtilities"
+            data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item" href="">-Ayudanos a mejorar</a>
+            </div>
+        </div>
+    </li>
 
-    <!-- Nav Item - Tables -->
-    <!-- <li class="nav-item">
-      <a class="nav-link" href="/">
-          <i class="fas fa-fw fa-table"></i> -->
-    <!-- <i class="fas fa-fw fa-poll-h"></i>
-          <span>Reseñas</span></a>
-  </li> -->
-
-    <!-- Divider -->
-    <!-- <hr class="sidebar-divider d-none d-md-block"> -->
+    <hr class="sidebar-divider">
+    
+    <li class="nav-link text-center">
+        <a  href="{{ url_for('logout')}}" class="btn btn-purple" role="button">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            Salir</a>
+    </li>
+    <hr class="sidebar-divider">
 
     <!-- Sidebar Toggler (Sidebar) -->
     <div class="text-center d-none d-md-inline">

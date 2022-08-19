@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import IntegerField, SelectField, SubmitField, StringField
+from wtforms import IntegerField, SelectField, SubmitField, StringField, PasswordField
 from wtforms.validators import Required, DataRequired, Email, Length
 from wtforms.fields.html5 import DateField, TimeField
 #from wtforms.validators import DataRequired, Email, Length
@@ -7,6 +7,47 @@ from wtforms.fields.html5 import DateField, TimeField
 from wtforms.fields import html5 as h5fields
 from wtforms.widgets import html5 as h5widgets
 
+
+# login and registration
+
+class LoginForm(FlaskForm):
+    email = StringField('Correo',
+                         id='username_login',
+                         validators=[DataRequired()])
+    password = PasswordField('Password',
+                             id='pwd_login',
+                             validators=[DataRequired()])
+
+
+class CreateAccountForm(FlaskForm):
+    nombres = StringField('Nombres:',
+                         id='nombre_create',
+                         validators=[DataRequired()])
+
+    apellido_paterno = StringField('Apellido paterno:',
+                         id='apellidom_create',
+                         validators=[DataRequired()])
+
+    apellido_materno = StringField('Apellido materno:',
+                         id='apellidom_create',
+                         validators=[DataRequired()])
+
+    email = StringField('Email',
+                      id='email_create',
+                      validators=[DataRequired(), Email()])
+
+    ocupacion = StringField('Ocupación:',
+                      id='ocupacion_create',
+                      validators=[DataRequired(), Email()])
+    asociacion = StringField('Asociación:', 
+                            id='asociacion_create',
+                            validators=[DataRequired(), Email()]) 
+    password1 = PasswordField('Contraseña',
+                             id='pwd1_create',
+                             validators=[DataRequired()])
+    password2 = PasswordField('Repite contraseña',
+                             id='pwd2_create',
+                             validators=[DataRequired()])
 
 class FormIndicadoresCultivo(FlaskForm):
     fechaCosecha = DateField('Indique la fecha de la última cosecha realizada, para calcular la fecha aproximada en que se dio la floración:', format='%Y-%m-%d', validators=(DataRequired(),))

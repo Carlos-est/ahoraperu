@@ -1,5 +1,6 @@
 import math
 from flask import Flask, render_template, request, redirect, url_for, flash, session
+from flask_login import LoginManager, login_required, current_user
 from flask_mysqldb import MySQL
 from werkzeug.exceptions import HTTPException
 import funcionesGenerales
@@ -18,10 +19,13 @@ from datetime import timedelta
 import datetime
 import config
 from datetime import datetime
-
+import os
+from pymongo import MongoClient
+from forms import LoginForm, CreateAccountForm
+import bcrypt
+import pymongo
 
 app = Flask(__name__)
-
 
 #MYSQL CONECTION
 app.config['MYSQL_HOST'] = 'labsac.com'
@@ -36,17 +40,154 @@ app.secret_key = 'mysecretkeyRepDom'
 app.config['PERMANENT_SESSION_LIFETIME'] =  timedelta(minutes=30)
 #variables = variables()
 
+##################conectamos a la base de datos de MONGODB
+MONGO_HOST = "200.48.235.251"
+MONGO_PUERTO ="27017"
+MONGO_PWD = "ciba15153232"
+MONGO_USER = "estacionesperu"
+MONGO_TIEMPO_FUERA =10000
+MONGO_BASEDATOS = "PROYECTO"
+MONGO_COLECCION = "users"
+MONGO_URI = "mongodb://"+ MONGO_USER +":"+ MONGO_PWD + "@"+MONGO_HOST +":" + MONGO_PUERTO + "/"
+#MONGO_URI = "mongodb://"+MONGO_HOST +":" + MONGO_PUERTO + "/"
+
+#connoct to your Mongo DB database
+client = MongoClient(MONGO_URI)
+
+baseDatos = client[MONGO_BASEDATOS]
+coleccion=baseDatos[MONGO_COLECCION]
+##########################  LOGIN
+""" login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = "login"
+def is_authenticated(self):
+	return True
+
+def is_active(self):
+	return True
+
+def is_anonymous(self):
+	return False
+
+def get_id(self):
+	return str(self.id)
+
+def is_admin(self):
+	return self.admin
+@login_manager.user_loader
+def load_user(user_id):
+    user_found = coleccion.find_one({"name": nombres})
+	return Usuarios.query.get(int(user_id))
+
+ """
+#assign URLs to have a particular route 
+
+@app.route("/", methods=['post', 'get'])
+def login():
+    loginForm=LoginForm()
+    message = 'Please login to your account'
+    if "email" in session:
+        return redirect(url_for("home"))
+
+    if request.method == "POST":
+        email = request.form.get("email")
+        password = request.form.get("password")
+
+        #check if email exists in database
+        email_found = coleccion.find_one({"email": email})
+        if email_found:
+            email_val = email_found['email']
+            passwordcheck = email_found['password']
+            #encode the password and check if it matches
+            if bcrypt.checkpw(password.encode('utf-8'), passwordcheck):
+                session["email"] = email_val
+                return redirect(url_for('home'))
+            else:
+                if "email" in session:
+                    return redirect(url_for("home"))
+                message = 'Error en la contraseña'
+                return render_template('accounts/login.html', message=message, form = loginForm)
+        else:
+            message = 'Email no encontrado'
+            return render_template('accounts/login.html', message=message, form = loginForm)
+
+    
+    return render_template('accounts/login.html',form = loginForm)
+
+@app.route("/register", methods=["POST", "GET"])
+def register():
+    createAccountForm=CreateAccountForm()
+    message = ''
+    if "email" in session:
+        return redirect(url_for("home"))
+    if request.method == "POST":
+        nombres = request.form.get("nombres")
+        print("nombres:", nombres)
+        apellido_paterno = request.form.get("apellido_paterno")
+        apellido_materno = request.form.get("apellido_materno")
+        email = request.form.get("email")
+        ocupacion = request.form.get("ocupacion")
+        asociacion = request.form.get("asociacion")
+        password1 = request.form.get("password1")
+        password2 = request.form.get("password2")
+        #if found in database showcase that it's found 
+        user_found = coleccion.find_one({"name": nombres})
+        email_found = coleccion.find_one({"email": email})
+        if email_found:
+            message = 'Este email ya existe en la base de datos'
+            return render_template('accounts/register.html', message=message,form=createAccountForm)
+        if password1 != password2:
+            message = 'Las contraseñas no coinciden!'
+            return render_template('accounts/register.html', message=message,form=createAccountForm)
+        else:
+            
+            #hash the password and encode it
+            hashed = bcrypt.hashpw(password2.encode('utf-8'), bcrypt.gensalt())
+            #assing them in a dictionary in key value pairs
+            user_input = {'nombres': nombres, 
+                        'apellido_paterno': apellido_paterno, 
+                        'apellido_materno': apellido_materno,
+                        'email': email, 
+                        'ocupacion': ocupacion,
+                        'asociacion': asociacion,
+                        'password': hashed}
+            #insert it in the record collection
+            print("insert mongo:", user_input)
+            coleccion.insert_one(user_input)
+            
+            #find the new created account and its email
+            user_data = coleccion.find_one({"email": email})
+            new_email = user_data['email']
+            #if registered redirect to logged in as the registered user
+            return render_template('home.html', email=new_email)
+    return render_template('accounts/register.html', message=message,form=createAccountForm)
+
+
+@app.route("/logout", methods=["POST", "GET"])
+def logout():
+    loginForm=LoginForm()
+    if "email" in session:
+        session.pop("email", None)
+        return redirect(url_for('login'))
+    else:
+        return redirect(url_for('login'))
+
+
+@app.route('/home')
+#@login_required
+def home():
+    if "email" in session:
+        email = session["email"]
+        return render_template('home.html', email=email)
+    else:
+        return redirect(url_for("login"))
+
 @app.before_request
 def do_something_when_a_request_comes_in():
 	track_visitor()
 
-@app.route('/')
-def Index():
-    return render_template ('index.html')
-
-
-
 @app.route('/formIndicadoresCosecha')
+#@login_required
 def formIndicadoresCosecha():
 
     formIndicadoresCultivo = FormIndicadoresCultivo()
@@ -54,6 +195,7 @@ def formIndicadoresCosecha():
     return render_template('formIndicadoresCosecha.html', form = formIndicadoresCultivo)
 
 @app.route('/formIndicadoresFloracion')
+#@login_required
 def formIndicadoresFloracion():
 
     formIndicadoresCultivo = FormIndicadoresCultivo()
@@ -61,6 +203,7 @@ def formIndicadoresFloracion():
     return render_template('formIndicadoresFloracion.html', form = formIndicadoresCultivo)
 
 @app.route('/viewIndicadoresCosecha', methods =['POST']) #ACTUALIZADO
+#@login_required
 def viewIndicadoresCosecha():
     
   if request.method == 'POST':
@@ -91,6 +234,7 @@ def viewIndicadoresCosecha():
     return render_template('viewIndicadoresCosecha.html', fechaCosecha=fechaCosecha, GDA = GDA, fecha_floracion = fecha_floracion, nSemanas = nSemanas, fechasBackward=fechasBackward, tempPromedioBackward =tempPromedioBackward,gradosDiaBackward=gradosDiaBackward, data= data, estacionName = estacionName)
 
 @app.route('/viewIndicadoresFloracion', methods =['POST'])
+#@login_required
 def viewIndicadoresFloracion():
     
   if request.method == 'POST':
@@ -136,38 +280,45 @@ def viewIndicadoresFloracion():
 #BIOMASA 
 
 @app.route('/formBiomasa')
+#@login_required
 def formBiomasa():
     formBiomasa = FormBiomasa()
     return render_template('formBiomasa.html', form = formBiomasa)
 
 @app.route('/formBiomasaProyeccion')
+#@login_required
 def formBiomasaProyeccion():
     formBiomasa = FormBiomasa()
     return render_template('formBiomasaProyeccion.html', form = formBiomasa)
 
 @app.route('/formNutrientes')
+#@login_required
 def formNutrientes():
     formNutrientes = FormNutrientes()
 
     return render_template('formNutrientes.html', form = formNutrientes)
 
 @app.route('/formHidrica')
+#@login_required
 def formHidrica():
     formRiego = FormRiego()
     return render_template('formHidrica.html', form = formRiego)
 
 @app.route('/formHidricaDemanda')
+#@login_required
 def formHidricaDemanda():
     formRiego = FormRiego()
     return render_template('formHidricaDemanda.html', form= formRiego)
 
 @app.route('/formHidricaIntervalo')
+#@login_required
 def formHidricaIntervalo():
     formRiego = FormRiego()
     return render_template('formHidricaIntervalo.html', form= formRiego)
 
 
 @app.route('/viewBiomasa', methods =['POST'])
+#@login_required
 def viewBiomasa():
     
   if request.method == 'POST':
@@ -190,6 +341,7 @@ def viewBiomasa():
     return render_template('viewBiomasa.html',fec_string = fec_string, biomasa_planta = biomasa_planta, biomasa=biomasa,  estacionName = estacionName, semanas=semanas)
 
 @app.route('/viewBiomasaProyeccion', methods =['POST'])
+#@login_required
 def viewBiomasaProyeccion():
     
   if request.method == 'POST':
@@ -226,6 +378,7 @@ def viewBiomasaProyeccion():
 
 
 @app.route('/viewNutrientes', methods =['POST'])
+#@login_required
 def viewNutrientes():
         
   if request.method == 'POST': 
@@ -254,6 +407,7 @@ def viewNutrientes():
     return render_template('viewNutrientes.html',fec = fec, biomasa_planta = biomasa_planta, biomasa=biomasa, tupla = tupla, intervalo = intervalo,  estacionName = estacionName)
 
 @app.route('/viewHidrica', methods =['POST'])
+#@login_required
 def viewHidrica():
     
   if request.method == 'POST':
@@ -289,6 +443,7 @@ def viewHidrica():
     return render_template('viewHidrica.html', NH= NH,NH2 = NH2,riego=riego, rain=rain, suelo=suelo, fechas = fechas, evap=evap,data=data, estacionName = estacionName, dias=int(dias), fechaFinal=fechaFinal)
 
 @app.route('/viewHidricaDemanda', methods =['POST'])
+#@login_required
 def viewHidricaDemanda():
     
   if request.method == 'POST':
@@ -320,6 +475,7 @@ def viewHidricaDemanda():
     return render_template('viewHidricaDemanda.html', NH= NH, NH2=NH2, fechas = fechas, evap=evap,rain=rain,data=data, estacionName = estacionName, evapoAcumulada=evapoAcumulada, fechaFinal=fechaFinal, deficit=deficit)
 
 @app.route('/viewHidricaIntervalo', methods =['POST'])
+#@login_required
 def viewHidricaIntervalo():
     
   if request.method == 'POST':
@@ -354,12 +510,14 @@ def viewHidricaIntervalo():
 
 
 @app.route('/formNroHojas')
+#@login_required
 def formNroHojas():
     #formBiomasa = FormBiomasa()
     formIndicadoresCultivo = FormIndicadoresCultivo()
     return render_template('formNroHojas.html', form=formIndicadoresCultivo)
 
 @app.route('/viewNroHojas', methods =['POST'])
+#@login_required
 def viewNroHojas():
     
   if request.method == 'POST':
@@ -390,6 +548,7 @@ def viewNroHojas():
 
 
 @app.route('/viewNroHojasNroSemanas', methods =['POST'])
+#@login_required
 def viewNroHojasNroSemanas():
     
   if request.method == 'POST':
@@ -419,7 +578,7 @@ def viewNroHojasNroSemanas():
     return render_template('view14NroSemanas.html', NHojas = NHojas,  data = data, fechas = fechas ,tempPromedio =tempPromedio,gradosDia = gradosDia , estacionName = estacionName, nroSemanas = nroSemanas,fechaFinal=fechaFinal)
 
 
-@app.errorhandler(Exception)
+""" @app.errorhandler(Exception)
 def handle_exception(e):
     # pass through HTTP errors
     if isinstance(e, HTTPException):
@@ -429,7 +588,7 @@ def handle_exception(e):
     flash('Error: Verifique los datos ingresados')
     return render_template("formError.html", e=e), 500 
 
-
+ """
 
 
 def track_visitor():
@@ -542,4 +701,4 @@ def log_visitor(ip_address, requested_url, referer_page, page_name, query_string
 		# conn.close()
 
 if __name__ == '__main__':
-    app.run(port=3000, debug=True)
+    app.run(port=5000, debug=True)
