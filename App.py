@@ -616,7 +616,7 @@ def MensajeEnviado():
     return render_template("MensajeEnviado.html")
 
 @app.route('/MensajeError', methods = [ 'GET','POST'])
-def MensajeEnviado():
+def MensajeError():
     return render_template("MensajeError.html")
 
 """ @app.errorhandler(Exception)
