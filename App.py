@@ -14,6 +14,7 @@ from forms import FormIndicadoresCultivo
 from forms import FormBiomasa
 from forms import FormNutrientes
 from forms import FormRiego
+from forms import  EnviarEmail
 
 from datetime import timedelta
 import datetime
@@ -24,6 +25,7 @@ from pymongo import MongoClient
 from forms import LoginForm, CreateAccountForm
 import bcrypt
 import pymongo
+from flask_mail import Mail, Message
 
 app = Flask(__name__)
 
@@ -122,7 +124,6 @@ def register():
         return redirect(url_for("home"))
     if request.method == "POST":
         nombres = request.form.get("nombres")
-        print("nombres:", nombres)
         apellido_paterno = request.form.get("apellido_paterno")
         apellido_materno = request.form.get("apellido_materno")
         email = request.form.get("email")
@@ -577,6 +578,46 @@ def viewNroHojasNroSemanas():
  
     return render_template('view14NroSemanas.html', NHojas = NHojas,  data = data, fechas = fechas ,tempPromedio =tempPromedio,gradosDia = gradosDia , estacionName = estacionName, nroSemanas = nroSemanas,fechaFinal=fechaFinal)
 
+@app.route('/EnviarCorreo', methods = [ 'GET','POST'])
+def EnviarCorreo():
+    enviarEmail=EnviarEmail()
+    app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+    app.config['MAIL_PORT'] = 465
+    app.config['MAIL_USE_TLS'] = False
+    app.config['MAIL_USE_SSL'] = True
+    # MAIL_DEBUG : default app.debug
+    app.config['MAIL_USERNAME'] = 'labsac2022@gmail.com'
+    app.config['MAIL_PASSWORD'] = 'elpdxpfshttksfgh'
+    # MAIL_DEFAULT_SENDER : default None
+    # MAIL_MAX_EMAILS : default None
+    # MAIL_SUPPRESS_SEND : default app.testing
+    # MAIL_ASCII_ATTACHMENTS : default False
+    mail = Mail(app)
+    if request.method  == "POST":
+        nombres = request.form.get("nombres")
+        apellido_paterno = request.form.get("apellido_paterno")
+        apellido_materno = request.form.get("apellido_materno")
+        email = request.form.get("email")
+        asociacion = request.form.get("asociacion")
+        Dispositivo = "Laptop o Computadora"
+        mensaje = request.form.get("mensaje")
+    
+        msg = Message("Sugerencias y consultas - °AHora", sender="labsac2022@gmail.com", recipients=["labsac2022@gmail.com"])
+        msg.body = "Nombre: {} \nApellidos: {} {}\nEmail: {}\nAsociación: {}\nDispositivo remitente: {}\nMensaje:\n{}".format(nombres, apellido_paterno, apellido_materno, email, asociacion,Dispositivo, mensaje)
+        try:
+            mail.send(msg)
+            return redirect(url_for("MensajeEnviado"))
+        except:
+            return redirect(url_for("MensajeError"))
+    return render_template("EnviarCorreo.html", form=enviarEmail)
+
+@app.route('/MensajeEnviado', methods = [ 'GET','POST'])
+def MensajeEnviado():
+    return render_template("MensajeEnviado.html")
+
+@app.route('/MensajeError', methods = [ 'GET','POST'])
+def MensajeEnviado():
+    return render_template("MensajeError.html")
 
 """ @app.errorhandler(Exception)
 def handle_exception(e):

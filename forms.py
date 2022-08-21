@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import IntegerField, SelectField, SubmitField, StringField, PasswordField
+from wtforms import IntegerField, SelectField, SubmitField, StringField, PasswordField, TextAreaField
 from wtforms.validators import Required, DataRequired, Email, Length
 from wtforms.fields.html5 import DateField, TimeField
 #from wtforms.validators import DataRequired, Email, Length
@@ -38,10 +38,10 @@ class CreateAccountForm(FlaskForm):
 
     ocupacion = StringField('Ocupación:',
                       id='ocupacion_create',
-                      validators=[DataRequired(), Email()])
+                      validators=[DataRequired()])
     asociacion = StringField('Asociación:', 
                             id='asociacion_create',
-                            validators=[DataRequired(), Email()]) 
+                            validators=[DataRequired()]) 
     password1 = PasswordField('Contraseña',
                              id='pwd1_create',
                              validators=[DataRequired()])
@@ -71,3 +71,31 @@ class FormNutrientes(FlaskForm):
 class FormRiego(FlaskForm):
     dias = h5fields.IntegerField("Número de días que normalmente pasan entre dos riegos (1-45):", widget=h5widgets.NumberInput(min=1, max=45, step=1), validators=(DataRequired(),))
     fechaFinal = DateField('Fecha final del periodo:', format='%Y-%m-%d', validators=(DataRequired(),))
+
+
+class EnviarEmail(FlaskForm):
+    nombres = StringField('Nombres:',
+                         id='nombre_create',
+                         validators=[DataRequired()])
+
+    apellido_paterno = StringField('Apellido paterno:',
+                         id='apellidom_create',
+                         validators=[DataRequired()])
+
+    apellido_materno = StringField('Apellido materno:',
+                         id='apellidom_create',
+                         validators=[DataRequired()])
+
+    email = StringField('Email',
+                      id='email_create',
+                      validators=[DataRequired(), Email()])
+
+    asociacion = StringField('Asociación:', 
+                            id='asociacion_create',
+                            validators=[DataRequired()]) 
+
+    mensaje = TextAreaField('Mensaje:', 
+                            id='mensaje_create',
+                            validators=[DataRequired(), Length(min=5, max=8)])
+                            
+
