@@ -161,7 +161,7 @@ def register():
             new_email = user_data['email']
             #if registered redirect to logged in as the registered user
             return render_template('home.html', email=new_email)
-    return render_template('accounts/register.html', message=message,form=createAccountForm)
+    return render_template('accounts/register.html', msg=message,form=createAccountForm)
 
 
 @app.route("/logout", methods=["POST", "GET"])
