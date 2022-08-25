@@ -348,22 +348,26 @@ def viewBiomasaProyeccion():
   if request.method == 'POST':
     fechaFloracion = request.form['fechaFloracion']    
     Cant_manos = request.form['Cant_manos']
-    nro_semanas = request.form['nro_semanas']
+    #nro_semanas = request.form['nro_semanas']
     rPa = request.form['rPa']    
     estacion = request.form['cmbEstacion']
     session['Cant_manos'] = Cant_manos
     session['rPa'] = rPa
     session['fechaFloracion'] = fechaFloracion
     session['estacion'] = estacion
-    session['nro_semanas'] = nro_semanas
+    #session['nro_semanas'] = nro_semanas
 
     fechaFloracion = funcionesGenerales.cambiar_formato_fecha(fechaFloracion)
     dict_estaciones = {"1":"Chulucanas","2":"otras"}
     estacionName=dict_estaciones[estacion] #BUSCA LA ESTACION 
     session['estacionName'] = estacionName
-    fec, fec_final,biomasa_planta, biomasa, estimacion, semanas = terceraFuncion.EstimacionRacimoProyeccion(fechaFloracion, int(estacion),int(rPa), int(Cant_manos), int(nro_semanas))
+    #fec, fec_final,biomasa_planta, biomasa, estimacion, semanas = terceraFuncion.EstimacionRacimoProyeccion(fechaFloracion, int(estacion),int(rPa), int(Cant_manos), int(nro_semanas))
+    
+    fec, fec_final,biomasa_planta, biomasa, estimacion, semanas = terceraFuncion.EstimacionRacimoProyeccion(fechaFloracion, int(estacion),int(rPa), int(Cant_manos))
+    
+    
     Cant_manos=int(Cant_manos)
-    nro_semanas = int(nro_semanas)
+    #nro_semanas = int(nro_semanas)
     if estimacion == 0:
         flash('Error: Verifique los datos ingresados')
         #return render_template("formError.html", e=e), 500 
@@ -372,10 +376,13 @@ def viewBiomasaProyeccion():
     else:
         file_selector = 'viewBiomasaProyeccion.html'   
 
-    return render_template(file_selector,fec = fec, fec_final = fec_final, 
+    """ return render_template(file_selector,fec = fec, fec_final = fec_final, 
     biomasa_planta=biomasa_planta,biomasa=biomasa,semanas=semanas, estimacion=estimacion, 
     estacionName = estacionName, Cant_manos=Cant_manos, nro_semanas=nro_semanas)
-
+    """
+    return render_template(file_selector,fec = fec, fec_final = fec_final, 
+    biomasa_planta=biomasa_planta,biomasa=biomasa,semanas=semanas, estimacion=estimacion, 
+    estacionName = estacionName)
 
 
 @app.route('/viewNutrientes', methods =['POST'])
