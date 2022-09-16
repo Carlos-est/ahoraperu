@@ -1,31 +1,16 @@
 import math
 from flask import Flask, render_template, request, redirect, url_for, flash, session
-from flask_login import LoginManager, login_required, current_user
-from flask_mysqldb import MySQL
 from werkzeug.exceptions import HTTPException
-import funcionesGenerales
-import primeraFuncion
-import segundaFuncion
-import terceraFuncion
-import cuartaFuncion
-import quintaFuncion
 
-from forms import FormIndicadoresCultivo
-from forms import FormBiomasa
-from forms import FormNutrientes
-from forms import FormRiego
-from forms import  EnviarEmail
+import bcrypt
+from pymongo import MongoClient
+from flask_mail import Mail, Message
 
 from datetime import timedelta
 import datetime
 import config
 from datetime import datetime
-import os
-from pymongo import MongoClient
-from forms import LoginForm, CreateAccountForm
-import bcrypt
-import pymongo
-from flask_mail import Mail, Message
+
 import requests, json
 
 app = Flask(__name__)
@@ -762,7 +747,7 @@ def MensajeEnviado():
 def MensajeError():
     return render_template("MensajeError.html")
 
-""" @app.errorhandler(Exception)
+@app.errorhandler(Exception)
 def handle_exception(e):
     # pass through HTTP errors
     if isinstance(e, HTTPException):
@@ -770,9 +755,9 @@ def handle_exception(e):
 
     # now you're handling non-HTTP exceptions only
     flash('Error: Verifique los datos ingresados')
-    return render_template("formError.html", e=e), 500  """
+    return render_template("formError.html", e=e), 500 
 
-""" @app.before_request
+@app.before_request
 def antes_de_cada_peticion():
     ruta = request.path
     print("ruta solicitada:", ruta)
@@ -782,7 +767,20 @@ def antes_de_cada_peticion():
         flash("Inicia sesión para continuar")
         return redirect(url_for('login'))
     else:
-        print("funcionamiento correcto") """
+        print("funcionamiento correcto")
+
+import funcionesGenerales
+import primeraFuncion
+import segundaFuncion
+import terceraFuncion
+import cuartaFuncion
+import quintaFuncion
+from forms import FormIndicadoresCultivo
+from forms import FormBiomasa
+from forms import FormNutrientes
+from forms import FormRiego
+from forms import LoginForm, CreateAccountForm
+from forms import EnviarEmail
 
 if __name__ == '__main__':
     app.run(port=3000, debug=True)
