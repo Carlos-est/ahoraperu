@@ -16,10 +16,13 @@ MONGO_PUERTO ="27017"
 MONGO_PWD = "ciba15153232"
 MONGO_USER = "estacionesperu"
 MONGO_TIEMPO_FUERA =1000
-MONGO_URI = "mongodb://"+ MONGO_USER +":"+ MONGO_PWD + "@"+MONGO_HOST +":" + MONGO_PUERTO + "/"
+# MONGO_URI = "mongodb://"+ MONGO_USER +":"+ MONGO_PWD + "@"+MONGO_HOST +":" + MONGO_PUERTO + "/"
 
 MONGO_BASEDATOS = "PROYECTO"
 MONGO_COLECCION = "PRETRATAMIENTO"
+
+MONGO_URI = "mongodb://"+ MONGO_USER +":"+ MONGO_PWD + "@"+MONGO_HOST +":" + MONGO_PUERTO + "/"+ MONGO_BASEDATOS 
+
 
 def convert_formato_fecha(fec):
     fec = datetime.strptime(fec, '%d/%m/%Y')

@@ -40,8 +40,10 @@ MONGO_USER = "estacionesperu"
 MONGO_TIEMPO_FUERA =10000
 MONGO_BASEDATOS = "PROYECTO"
 MONGO_COLECCION = "users"
-MONGO_URI = "mongodb://"+ MONGO_USER +":"+ MONGO_PWD + "@"+MONGO_HOST +":" + MONGO_PUERTO + "/"
+# MONGO_URI = "mongodb://"+ MONGO_USER +":"+ MONGO_PWD + "@"+MONGO_HOST +":" + MONGO_PUERTO + "/"
 #MONGO_URI = "mongodb://"+MONGO_HOST +":" + MONGO_PUERTO + "/"
+
+MONGO_URI = "mongodb://"+ MONGO_USER +":"+ MONGO_PWD + "@"+MONGO_HOST +":" + MONGO_PUERTO + "/"+ MONGO_BASEDATOS 
 
 #connoct to your Mongo DB database
 client = MongoClient(MONGO_URI)
